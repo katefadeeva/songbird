@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Header from '../header';
-// import RandomBird from '../random-bird';
+import RandomBird from '../random-bird';
 import ErrorBoundry from "../error-boundry";
 
 import './app.css';
+import BirdsPage from "../birds-page";
 
 export default class App extends Component {
 
@@ -16,7 +17,8 @@ export default class App extends Component {
         <ErrorBoundry>
           <div className="wrapper">
             <Header />
-            {/*<RandomBird />*/}
+            <RandomBird />
+            <BirdsPage />
           </div>
         </ErrorBoundry>
     );
