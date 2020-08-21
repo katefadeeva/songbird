@@ -26,7 +26,6 @@ export default class ItemDetails extends Component {
     if ( !itemId ) {
       return;
     }
-
     this.setState({
       item: getData
     });

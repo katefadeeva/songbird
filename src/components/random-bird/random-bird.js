@@ -1,50 +1,57 @@
 import React, {Component} from "react";
-import BirdsData from "../../services";
 import AudioPlayer from "../audio/audio";
 
 import icon from "./bird.jpg";
 
 import "./random-bird.css";
-import ErrorIndicator from "../error-indicator";
-import Spinner from "../spinner";
 
 export default class RandomBird extends Component {
 
   state = {
     bird: {},
-    birdImage: false,
-    loading: false,
-    error: false
+    success: false
+  }
+
+  componentDidMount() {
+    const { randomItem, success } = this.props;
+    this.setState({
+      bird: randomItem,
+      success: success
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.success !== prevProps.success) {
+      this.setState({
+        success: this.props.success
+      })
+    }
   }
 
   render() {
-    const {birdImage, loading, error} = this.state;
-    const hasData = !(loading || error);
-    const errorMessage = error ? <ErrorIndicator /> : null;
-    const spinner = loading ? <Spinner /> : null;
-    const content = hasData ? <BirdView /> : null;
+    const { bird, success } = this.state;
+
+    const content = success ? <BirdView audio={bird.audio} name={bird.name} image={bird.image}/> : <BirdView audio={bird.audio} name='******' image={icon}/>;
 
     return (
         <div className="random-bird jumbotron rounded">
-          {errorMessage}
-          {spinner}
           {content}
         </div>
     );
   };
 };
 
-const BirdView = () => {
+const BirdView = ({audio, name, image}) => {
   return (
       <React.Fragment>
-        <img className="bird-image" src={icon} alt="bird" />
+        <img className="bird-image" src={image} alt="bird" />
         <div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">
-              <h3>********</h3>
+              <h3>{name}</h3>
             </li>
             <li className="list-group-item">
-              <AudioPlayer url={BirdsData[0][0].audio} />
+              <AudioPlayer url={audio} />
             </li>
           </ul>
         </div>

@@ -13,6 +13,10 @@
   margin-right: 2rem;
 }
 
+.bird-description {
+  padding-top: 25px;
+}
+
 .bird-details .list-group-item {
   padding: .25rem;
 }

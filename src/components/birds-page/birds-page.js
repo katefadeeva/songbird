@@ -1,7 +1,6 @@
 import React, {Component} from "react";
-import ItemList from "../item-list";
+import BirdsList from "../birds-list";
 import ItemDetails from "../item-details";
-import BirdsData from "../../services";
 import ErrorBoundry from "../error-boundry";
 import Row from "../row";
 import "./birds-page.css"
@@ -9,35 +8,53 @@ import "./birds-page.css"
 export default class BirdsPage extends Component {
 
   state = {
+    getData: this.props.getData,
     instruction: true,
-    selectedBird: 0
+    selectedBird: {},
+    randomItem: this.props.randomItem,
+    score: this.props.score
+  }
+
+  componentDidMount() {
+    const { getData } = this.props;
+    getData.sort((a,b) => {
+      if (a.name < b.name) {return -1;}
+      if (a.name > b.name) {return 1;}
+    });
+    this.setState({ getData: getData
+    });
   }
 
   onBirdSelected = (selectedBird) => {
+    const {getData} = this.state;
+    const id = (getData.filter((item) => item.id === selectedBird));
     this.setState( {
-      selectedBird: selectedBird,
+      selectedBird: id[0],
       instruction: false
     });
   }
 
   render() {
 
-    const {selectedBird, instruction} = this.state;
-
+    const {selectedBird, instruction, getData, randomItem, score} = this.state;
     const itemList = (
         <ErrorBoundry>
-          <ItemList
+          <BirdsList
               onItemSelected = {this.onBirdSelected}
-              getData = {BirdsData[0]}>
+              getData = {getData}
+              randomItem = {randomItem}
+              score = {score}
+              scoreCount = {this.props.scoreCount}
+              success = {this.props.success}>
             {(i) => (`${i.name} `)}
-          </ItemList>
+          </BirdsList>
         </ErrorBoundry>
 
     );
 
     const content = instruction ? <DefaultBirdsDetails /> : <ItemDetails
-        itemId={BirdsData[0][selectedBird].id}
-        getData={BirdsData[0][selectedBird]}>
+        itemId={selectedBird.id}
+        getData={selectedBird}>
     </ItemDetails>;
 
     const birdDetails = (

@@ -66,7 +66,8 @@
   height: 200px;
   display: inline-block;
   overflow: hidden;
-  background: #303030;
+  background: none;
+  margin: 0 auto;
 }
 .ldio-3rhy0ejpwfe {
   width: 100%;
@@ -75,8 +76,6 @@
   transform: translateZ(0) scale(1);
   backface-visibility: hidden;
   transform-origin: 0 0;
-  background-color: #303030;
-  margin-left: 37%;
   /* see note above */
 }
 .ldio-3rhy0ejpwfe div {box-sizing: content-box;}
